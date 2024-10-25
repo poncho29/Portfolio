@@ -7,7 +7,7 @@ export const PROJECTS: Project[] = [
     description: 'Sitio web de la Fundación vincent, que busca promover la adopción de animales.',
     urlImage: '/projects/proyecto-fundacion-vincent.webp',
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'Nest.js', 'TypeORM', 'PostgreSQL'],
-    urlDemo: 'https://vincent-app-pi.vercel.app/',
+    urlDemo: 'https://fundacionvincent.vercel.app/',
     urlCode: 'https://github.com/poncho29/vincent-app',
   },
   {
