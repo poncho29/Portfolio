@@ -3,6 +3,8 @@ title: "Mi Primer Blog en Next.js"
 date: "Oct 24 2024"
 author: "Sebastián Meneses"
 tags: ["Next.js", "Markdown", "Desarrollo Web"]
+description: "Como mejorar en programacion"
+image: "/blogs/mi-primer-blog.png"
 ---
 
 ## Bienvenido a mi primer blog

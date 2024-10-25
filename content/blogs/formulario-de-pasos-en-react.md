@@ -1,8 +1,10 @@
 ---
-title: "Mi segundo blog en Next.js"
-date: "2024-10-24"
-author: "Sebastián"
-tags: ["Next.js", "Markdown", "Desarrollo Web"]
+title: "Formulario de pasos en React.js"
+date: "Nov 12 2024"
+author: "Sebastián Meneses"
+tags: ["React.js", "Tailwind", "Desarrollo Web"]
+description: "Este blog te explica como crear un formulario de pasos con React.js y Tailwind.css"
+image: "/blogs/formulario-de-pasos-en-react.jpeg"
 ---
 
 # Bienvenido a mi primer blog
