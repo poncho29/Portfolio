@@ -56,3 +56,10 @@ export function getAllBlogs(): IBlogPost[] {
 
   return blogs;
 }
+
+export function getAllBlogSlugs() {
+  const files = fs.readdirSync(path.join('content', 'blogs'));
+  return files.map((fileName) => ({
+    slug: fileName.replace(/\.md$/, ''),
+  }));
+}

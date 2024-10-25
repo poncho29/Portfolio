@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
-import { getMarkdownContent } from '@/lib';
+import { getAllBlogSlugs, getMarkdownContent } from '@/lib';
 
 import styles from './blog.module.css';
 
@@ -13,6 +13,10 @@ interface BlogPageProps {
   params: {
     slug: string;
   };
+}
+
+export async function generateStaticParams() {
+  return getAllBlogSlugs();
 }
 
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
