@@ -1,41 +1,36 @@
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
 
-import { AlertCircle } from "lucide-react";
+// import { AlertCircle } from "lucide-react";
 
-import { getArticles } from "@/actions";
-
-import { Button } from "@/components/ui";
+// import { Button } from "@/components/ui";
 
 export default async function BlogPage() {
-
-  const { data, error } = await getArticles();
-
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
-          <div className="flex items-center">
-            <AlertCircle className="h-6 w-6 mr-2" />
-            <p className="font-bold">Error</p>
-          </div>
-          <p>{error.message}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    )
-  }
+  // if (error) {
+  //   return (
+  //     <div className="container mx-auto px-4 py-8">
+  //       <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
+  //         <div className="flex items-center">
+  //           <AlertCircle className="h-6 w-6 mr-2" />
+  //           <p className="font-bold">Error</p>
+  //         </div>
+  //         <p>{error.message}</p>
+  //         <button 
+  //           onClick={() => window.location.reload()} 
+  //           className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+  //         >
+  //           Try Again
+  //         </button>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <section className="my-8">
       <h1 className="text-3xl font-bold mb-12 text-center">Aprendamos Juntos</h1>
 
-      {data.length === 0 ? (
+      {/* {data.length === 0 ? (
         <p className="text-center text-gray-600">No articles found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -64,7 +59,7 @@ export default async function BlogPage() {
             </article>
           ))}
         </div>
-      )}
+      )} */}
     </section>
   );
 }
