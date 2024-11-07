@@ -21,8 +21,8 @@ export const PROJECTS: Project[] = [
   },
   {
     id: '3',
-    name: 'Tutoriales de Youtube',
-    description: 'Este proyecto recopila el codigo de los tutoriales de youtube enfocado en React.js.',
+    name: 'Mini Apps de React.js',
+    description: 'Este proyecto agrupa mini aplicaciones con React.js.',
     urlImage: '/projects/proyecto-youtube-tutorials.webp',
     stack: ['React.js', 'JavaScript', 'Tailwind'],
     urlDemo: 'https://youtube-tutorials-steel.vercel.app/',
