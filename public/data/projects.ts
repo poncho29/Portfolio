@@ -29,7 +29,7 @@ export const PROJECTS: Project[] = [
     urlImage: '/projects/proyecto-youtube-tutorials.webp',
     stack: ['React.js', 'JavaScript', 'Tailwind'],
     isPrivate: false,
-    urlDemo: 'https://youtube-tutorials-steel.vercel.app/',
+    urlDemo: 'https://miniappsreact.vercel.app/',
     urlCode: 'https://github.com/poncho29/youtube-tutorials',
   }
 ];
