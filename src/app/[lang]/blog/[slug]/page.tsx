@@ -9,8 +9,11 @@ import { getAllBlogSlugs, getMarkdownContent } from '@/lib';
 
 import styles from './blog.module.css';
 
+import type { Locale } from '@/i18n/config';
+
 interface BlogPageProps {
   params: {
+    lang: Locale;
     slug: string;
   };
 }

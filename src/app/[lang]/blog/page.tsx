@@ -5,7 +5,14 @@ import { getAllBlogs } from "@/lib";
 
 import { Button } from "@/components/ui";
 
-export default async function BlogPage() {
+import type { Locale } from "@/i18n/config";
+
+interface Props {
+  params: { lang: Locale };
+}
+
+export default async function BlogPage({ params }: Props) {
+  const { lang } = params;
   const blogs = getAllBlogs();
 
   return (
@@ -35,7 +42,7 @@ export default async function BlogPage() {
                 <span>{blog.metadata.author}</span>
               </div>
               <Button asChild>
-                <Link href={`/blog/${blog.slug}`}>
+                <Link href={`/${lang}/blog/${blog.slug}`}>
                   Ver más
                 </Link>
               </Button>
