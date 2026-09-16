@@ -1,10 +1,9 @@
-import { Project } from "@/interfaces";
+import type { Project } from "@/interfaces";
 
 export const PROJECTS: Project[] = [
   {
     id: '1',
     name: 'Fundación Vincent',
-    description: 'Sitio web de la Fundación vincent, que busca promover la adopción de animales.',
     urlImage: '/projects/proyecto-fundacion-vincent.webp',
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'Nest.js', 'TypeORM', 'PostgreSQL'],
     isPrivate: true,
@@ -15,7 +14,6 @@ export const PROJECTS: Project[] = [
   {
     id: '2',
     name: 'Portafolio de Diseñadora',
-    description: 'Pagina web y portafolio para la diseñadora Laura Martinez.',
     urlImage: '/projects/proyecto-portafolio-desing.webp',
     stack: ['React.js', 'TypeScript', 'Tailwind'],
     isPrivate: false,
@@ -25,7 +23,6 @@ export const PROJECTS: Project[] = [
   {
     id: '3',
     name: 'Mini Apps con React.js',
-    description: 'Este proyecto agrupa mini aplicaciones que he desarrollado con React.',
     urlImage: '/projects/proyecto-youtube-tutorials.webp',
     stack: ['React.js', 'JavaScript', 'Tailwind'],
     isPrivate: false,
