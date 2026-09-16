@@ -1,35 +1,33 @@
 import { CardExperience } from "@/components/experience";
+import { SectionHeading } from "@/components/common";
 
-import { AntPackIcon } from "@/components/icons";
+import { EXPERIENCE } from "@/data";
+import { getDictionary } from "@/i18n/get-dictionary";
+import type { Locale } from "@/i18n/config";
 
-import { IExperience } from "@/interfaces";
+interface Props {
+  lang: Locale;
+}
 
-export const EXPERIENCE: IExperience[] = [
-  {
-    id: 1,
-    title: "Desarrollador Front-end",
-    company: "AntPack",
-    logoCompany: () => <AntPackIcon width={160} />,
-    description: [
-      "En Antpack, me encargo de maquetar interfaces gráficas responsivas, optimizando tanto la experiencia de usuario como el rendimiento de la página o aplicación. También realizo integraciones con servicios REST o GraphQL utilizando tecnologías como ReactJS y NextJS.",
-      "La página web de Antpack es un ejemplo de mi trabajo que puede ver dando click en el siguiente botón."
-    ],
-    date: "2022 - Presente",
-    href: "https://antpack.co/es"
-  }
-];
+export const ExperienceSection = ({ lang }: Props) => {
+  const dict = getDictionary(lang);
 
-export const ExperienceSection = () => {
   return (
-    <section className="mt-16">
-      <h2 className="text-3xl font-bold mb-8">Experiencia laboral</h2>
+    <section id="experience" className="mt-16 scroll-mt-28">
+      <SectionHeading eyebrow={dict.sections.eyebrow.experience} heading={dict.sections.experience} />
 
       <ol className="relative">
         {EXPERIENCE.map((item) => (
           <li key={item.id}>
-            <CardExperience experience={item} />
+            <CardExperience
+              experience={item}
+              lang={lang}
+              title={dict.experience.items[item.id].title}
+              bullets={dict.experience.items[item.id].bullets}
+              learnMoreLabel={dict.experience.learnMore}
+            />
           </li>
-        ))}          
+        ))}
       </ol>
     </section>
   )

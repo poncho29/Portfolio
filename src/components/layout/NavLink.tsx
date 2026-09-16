@@ -17,9 +17,9 @@ export const NavLink = ({ href, label }: Props) => {
     <Link
       href={href}
       className={cn(
-        'flex items-center justify-between p-2 rounded-md cursor-pointer transition-all duration-300 hover:bg-sky',
+        'flex items-center justify-between p-2 rounded-md cursor-pointer transition-all duration-300 hover:bg-accent hover:text-accent-foreground',
         {
-          'font-bold bg-sky': pathname === href,
+          'font-bold bg-secondary text-secondary-foreground': pathname === href,
         }
       )}
     >

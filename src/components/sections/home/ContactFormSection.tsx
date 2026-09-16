@@ -2,12 +2,24 @@
 
 import { useEffect, useState } from 'react';
 
-import { Alert, AlertDescription, Button, Input, Label, Textarea } from '@/components/ui';
+import { MapPin } from 'lucide-react';
+
+import { Alert, AlertDescription, Button, Card, Input, Label, Textarea } from '@/components/ui';
+import { SectionHeading, SocialLinks } from '@/components/common';
 
 import { IContactFormData, IContactFormErrors } from '@/interfaces';
 import { sendContactForm } from '@/actions';
 
-export const ContactFormSection = () => {
+import { getDictionary } from '@/i18n/get-dictionary';
+import type { Locale } from '@/i18n/config';
+
+interface Props {
+  lang: Locale;
+}
+
+export const ContactFormSection = ({ lang }: Props) => {
+  const dict = getDictionary(lang);
+
   const [formData, setFormData] = useState<IContactFormData>({
     name: '',
     email: '',
@@ -22,9 +34,11 @@ export const ContactFormSection = () => {
     if (submitSuccess || errors.submit) {
       setShowAlert(true);
 
+      // 6s (not the previous 2s) gives assistive tech and human readers
+      // enough time to perceive the message before it disappears.
       const timer = setTimeout(() => {
         setShowAlert(false)
-      }, 2000)
+      }, 6000)
 
       return () => clearTimeout(timer)
     }
@@ -33,13 +47,13 @@ export const ContactFormSection = () => {
   const validateField = (name: keyof IContactFormData, value: string): string => {
     switch (name) {
       case 'name':
-        return value.trim() ? '' : 'El nombre es requerido'
+        return value.trim() ? '' : dict.contactForm.errors.nameRequired
       case 'email':
-        return value.trim() 
-          ? (/\S+@\S+\.\S+/.test(value) ? '' : 'El email no es válido')
-          : 'El email es requerido'
+        return value.trim()
+          ? (/\S+@\S+\.\S+/.test(value) ? '' : dict.contactForm.errors.emailInvalid)
+          : dict.contactForm.errors.emailRequired
       case 'message':
-        return value.trim() ? '' : 'El mensaje es requerido'
+        return value.trim() ? '' : dict.contactForm.errors.messageRequired
       default:
         return ''
     }
@@ -64,7 +78,7 @@ export const ContactFormSection = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
-    
+
     const error = validateField(name as keyof IContactFormData, value)
     setErrors(prev => ({ ...prev, [name]: error }))
   }
@@ -84,10 +98,8 @@ export const ContactFormSection = () => {
     if (validateForm()) {
       const response = await sendContactForm({ body: formData })
 
-      console.log(response);
-
       if (!response.success) {
-        setErrors({ ...errors, submit: "Ups, Algo salió mal. Por favor, inténtalo de nuevo." });
+        setErrors({ ...errors, submit: dict.contactForm.errorMessage });
       } else {
         setSubmitSuccess(true);
         setFormData({ name: '', email: '', message: '' });
@@ -98,70 +110,112 @@ export const ContactFormSection = () => {
   }
 
   return (
-    <section id="contact" className="my-16">
-      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto py-4 space-y-6">
-        <h2 className="text-3xl font-bold mb-4">
-          Contáctame
-        </h2>
-        
-        {showAlert && submitSuccess && (
-          <Alert className="bg-green-100 border-green-400 text-green-700">
-            <AlertDescription>¡Formulario enviado! Responderé lo más pronto posible.</AlertDescription>
-          </Alert>
-        )}
+    <section id="contact" className="my-16 scroll-mt-28">
+      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="rounded-2xl border border-border/70 bg-gradient-to-br from-brand/10 via-muted/30 to-transparent p-6 sm:p-8">
+          <SectionHeading eyebrow={dict.sections.eyebrow.contact} heading={dict.sections.contact} />
 
-        {showAlert && errors.submit && (
-          <Alert variant="destructive">
-            <AlertDescription>{errors.submit}</AlertDescription>
-          </Alert>
-        )}
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="name" className='font-semibold'>Nombre</Label>
-            <Input
-              id="name"
-              name="name"
-              placeholder="Tu nombre"
-              value={formData.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
+          <p className="max-w-md text-muted-foreground">
+            {dict.contactForm.contactIntro}
+          </p>
+
+          <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+            <MapPin aria-hidden="true" focusable="false" className="h-4 w-4 shrink-0 text-brand" />
+            <span>{dict.contactForm.contactLocation}</span>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="email" className='font-semibold'>Correo electrónico</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="tu@email.com"
-              value={formData.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+
+          <div className="mt-6">
+            <SocialLinks linkedinLabel="LinkedIn" githubLabel="GitHub" className="-ml-2" />
           </div>
         </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="message" className='font-semibold'>Mensaje</Label>
-          <Textarea
-            id="message"
-            name="message"
-            placeholder="Escribe tu mensaje aquí"
-            className="min-h-[150px]"
-            value={formData.message}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.message && <p className="text-sm text-red-500">{errors.message}</p>}
-        </div>
-        
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Enviando...' : 'Enviar'}
-        </Button>
-      </form>
+
+        <Card className="p-6 sm:p-8">
+          {/* Always-present live region: screen readers pick up updates to
+              its content (the alert appearing/disappearing) without the
+              container itself needing to mount/unmount. */}
+          <div aria-live="polite" aria-atomic="true" className="empty:hidden">
+            <div className="mb-4 space-y-3">
+              {showAlert && submitSuccess && (
+                <Alert className="border-brand/40 bg-brand/10 text-foreground">
+                  <AlertDescription>{dict.contactForm.successMessage}</AlertDescription>
+                </Alert>
+              )}
+
+              {showAlert && errors.submit && (
+                <Alert variant="destructive">
+                  <AlertDescription>{errors.submit}</AlertDescription>
+                </Alert>
+              )}
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} noValidate className="space-y-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="name" className='font-semibold'>{dict.contactForm.nameLabel}</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder={dict.contactForm.namePlaceholder}
+                  value={formData.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
+                />
+                {errors.name && (
+                  <p id="name-error" role="alert" className="text-sm text-destructive">
+                    {errors.name}
+                  </p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email" className='font-semibold'>{dict.contactForm.emailLabel}</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={dict.contactForm.emailPlaceholder}
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
+                />
+                {errors.email && (
+                  <p id="email-error" role="alert" className="text-sm text-destructive">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="message" className='font-semibold'>{dict.contactForm.messageLabel}</Label>
+              <Textarea
+                id="message"
+                name="message"
+                placeholder={dict.contactForm.messagePlaceholder}
+                className="min-h-[150px]"
+                value={formData.message}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={errors.message ? 'message-error' : undefined}
+              />
+              {errors.message && (
+                <p id="message-error" role="alert" className="text-sm text-destructive">
+                  {errors.message}
+                </p>
+              )}
+            </div>
+
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? dict.contactForm.submittingButton : dict.contactForm.submitButton}
+            </Button>
+          </form>
+        </Card>
+      </div>
     </section>
   )
 }
