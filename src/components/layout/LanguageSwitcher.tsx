@@ -22,6 +22,17 @@ const LOCALE_NAMES: Record<Locale, string> = {
   es: 'Español',
 };
 
+const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+
+/**
+ * Persists the visitor's chosen locale so a later visit to the bare domain
+ * (no locale segment) is honoured by the middleware instead of always
+ * falling back to the default/negotiated locale.
+ */
+const persistLocaleCookie = (locale: Locale) => {
+  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; SameSite=Lax`;
+};
+
 /**
  * Segmented pill toggle. Real <Link> elements (works without JS, crawlable),
  * with a decorative sliding indicator behind the active option. The
@@ -62,6 +73,7 @@ export const LanguageSwitcher = ({ lang, label, bare = false }: Props) => {
                   href={href}
                   aria-current={isActive ? 'page' : undefined}
                   aria-label={LOCALE_NAMES[locale]}
+                  onClick={() => persistLocaleCookie(locale)}
                   className={cn(
                     'flex min-h-9 min-w-9 items-center justify-center rounded-full px-3 text-xs font-semibold uppercase tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
                     isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
