@@ -5,6 +5,8 @@ export const es: Dictionary = {
     title: "Sebastián Meneses | Desarrollador Web Full Stack",
     description:
       "Desarrollador Web Full Stack radicado en Brisbane, Australia. Casi 5 años construyendo aplicaciones web modernas y escalables con React, Next.js, Node.js y Nest.js.",
+    role: "Desarrollador Web Full Stack",
+    ogImageAlt: "Sebastián Meneses, Desarrollador Web Full Stack radicado en Brisbane, Australia",
   },
   nav: {
     mainNavigation: "Navegación principal",

@@ -10,8 +10,8 @@ interface Props {
   iconClassName?: string;
 }
 
-const LINKEDIN_URL = 'https://www.linkedin.com/in/sebastianmeneses29/';
-const GITHUB_URL = 'https://github.com/poncho29';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/sebastianmeneses29/';
+export const GITHUB_URL = 'https://github.com/poncho29';
 
 const LINK_CLASSES =
   'flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-200 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2';
