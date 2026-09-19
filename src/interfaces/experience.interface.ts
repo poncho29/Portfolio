@@ -5,5 +5,5 @@ export interface IExperience {
   company: string;
   logoKey?: string;
   date: Record<Locale, string>;
-  href?: string;
+  href?: Record<Locale, string>;
 }

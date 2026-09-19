@@ -11,6 +11,7 @@ import {
   SkillSection,
 } from "@/components/sections";
 
+import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 
 export default function Home({ params }: Props) {
   const { lang } = params;
+  const dict = getDictionary(lang);
 
   return (
     <>
@@ -50,7 +52,7 @@ export default function Home({ params }: Props) {
         <ContactFormSection lang={lang} />
       </ScrollReveal>
 
-      <ScrollToTopButton />
+      <ScrollToTopButton label={dict.nav.scrollToTop} />
     </>
   );
 }

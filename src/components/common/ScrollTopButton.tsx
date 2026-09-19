@@ -6,7 +6,11 @@ import { ArrowUpIcon } from "lucide-react";
 
 import { Button } from "@/components/ui";
 
-export default function ScrollToTopButton() {
+interface Props {
+  label: string;
+}
+
+export default function ScrollToTopButton({ label }: Props) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function ScrollToTopButton() {
 
   return (
     <Button
-      aria-label="Scroll to top"
+      aria-label={label}
       className="fixed bottom-4 right-4 rounded-full p-2"
       onClick={scrollToTop}
     >

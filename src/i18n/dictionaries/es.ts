@@ -18,6 +18,7 @@ export const es: Dictionary = {
     themeToDark: "Cambiar a tema oscuro",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
+    scrollToTop: "Volver arriba",
   },
   sections: {
     experience: "Experiencia laboral",

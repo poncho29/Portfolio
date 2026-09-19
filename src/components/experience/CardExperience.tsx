@@ -78,7 +78,7 @@ export const CardExperience = ({ experience, lang, title, bullets, learnMoreLabe
           {href && (
             <Button asChild variant="outline">
               <Link
-                href={href}
+                href={href[lang]}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-32"

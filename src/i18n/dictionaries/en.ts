@@ -15,6 +15,7 @@ export interface Dictionary {
     themeToDark: string;
     openMenu: string;
     closeMenu: string;
+    scrollToTop: string;
   };
   sections: {
     experience: string;
@@ -105,6 +106,7 @@ export const en: Dictionary = {
     themeToDark: "Switch to dark theme",
     openMenu: "Open menu",
     closeMenu: "Close menu",
+    scrollToTop: "Scroll to top",
   },
   sections: {
     experience: "Work experience",

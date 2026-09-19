@@ -12,7 +12,7 @@ export const EXPERIENCE: IExperience[] = [
     id: 2,
     company: "Antpack S.A.S",
     logoKey: "antpack",
-    href: "https://antpack.co/es",
+    href: { en: "https://antpack.co/en", es: "https://antpack.co/es" },
     date: { en: "Jan 2022 – Jul 2026", es: "Ene 2022 – Jul 2026" },
   },
 ];
