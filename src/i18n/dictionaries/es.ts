@@ -82,17 +82,35 @@ export const es: Dictionary = {
   },
   projects: {
     viewProjectButton: "Ver proyecto",
-    viewDemoButton: "Ver demo",
-    viewCodeButton: "Ver código",
+    screenshotAlt: "{project}, captura {index} de {total}",
+    screenshotNavLabel: "Mostrar captura {index}",
     items: {
       "1": {
-        description: "Sitio web de la Fundación vincent, que busca promover la adopción de animales.",
+        description:
+          "Sistema multi-tenant con base de datos propia por cliente para el control y la organización de servicios en talleres. Permite gestionar órdenes, estados del servicio, control de tiempos, entregas y evidencias.",
       },
       "2": {
-        description: "Pagina web y portafolio para la diseñadora Laura Martinez.",
+        description:
+          "Tienda online de VASEprint, con panel administrativo para controlar productos, órdenes y el estado de los envíos.",
       },
       "3": {
-        description: "Este proyecto agrupa mini aplicaciones que he desarrollado con React.",
+        description:
+          "Sistema para el registro de la recolección de café. Permite registrar cada pesada por recolector, definir fincas, tarifas, gastos y pagos a recolectores con su recibo.",
+      },
+      "4": {
+        description:
+          "Sistema público conectado a la API del SECOP II que avisa de licitaciones según los filtros definidos en el perfil. Los avisos llegan por Telegram, totalmente gratis.",
+      },
+      "5": {
+        description:
+          "Página web para inmobiliaria, con panel administrativo del contenido.",
+      },
+      "6": {
+        description:
+          "Página web estática que muestra los servicios y productos en venta de Colfood.",
+      },
+      "7": {
+        description: "Página web y portafolio para la diseñadora Laura Martínez.",
       },
     },
   },

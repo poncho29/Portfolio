@@ -58,8 +58,8 @@ export interface Dictionary {
   };
   projects: {
     viewProjectButton: string;
-    viewDemoButton: string;
-    viewCodeButton: string;
+    screenshotAlt: string;
+    screenshotNavLabel: string;
     items: Record<string, { description: string }>;
   };
   contactForm: {
@@ -169,17 +169,35 @@ export const en: Dictionary = {
   },
   projects: {
     viewProjectButton: "View project",
-    viewDemoButton: "View demo",
-    viewCodeButton: "View code",
+    screenshotAlt: "{project}, screenshot {index} of {total}",
+    screenshotNavLabel: "Show screenshot {index}",
     items: {
       "1": {
-        description: "Website for Fundación Vincent, which aims to promote animal adoption.",
+        description:
+          "Multi-tenant system with a dedicated database per tenant, built to control and organise workshop services. It covers work orders, service status, time tracking, deliveries and evidence.",
       },
       "2": {
-        description: "Website and portfolio for designer Laura Martinez.",
+        description:
+          "VASEprint's online store, with an admin dashboard to manage products, orders and shipping status.",
       },
       "3": {
-        description: "This project groups together mini applications I have built with React.",
+        description:
+          "System for recording coffee harvesting. It logs every weigh-in per picker and handles farms, rates, expenses and picker payments with receipts.",
+      },
+      "4": {
+        description:
+          "Public system connected to the SECOP II API that reports public tenders matching the filters set in each profile. Alerts arrive on Telegram, completely free.",
+      },
+      "5": {
+        description:
+          "Website for a real estate agency, with an admin panel to manage its content.",
+      },
+      "6": {
+        description:
+          "Static website showcasing the services and products Colfood has for sale.",
+      },
+      "7": {
+        description: "Website and portfolio for designer Laura Martínez.",
       },
     },
   },

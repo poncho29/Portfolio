@@ -16,7 +16,7 @@ export const ProjectSection = ({ lang }: Props) => {
     <section id="projects" className="mt-16 scroll-mt-28">
       <SectionHeading eyebrow={dict.sections.eyebrow.projects} heading={dict.sections.projects} />
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         {PROJECTS.map((project) => (
           <CardProject
             key={project.id}
@@ -24,8 +24,8 @@ export const ProjectSection = ({ lang }: Props) => {
             description={dict.projects.items[project.id].description}
             labels={{
               viewProject: dict.projects.viewProjectButton,
-              viewDemo: dict.projects.viewDemoButton,
-              viewCode: dict.projects.viewCodeButton,
+              screenshotAlt: dict.projects.screenshotAlt,
+              screenshotNavLabel: dict.projects.screenshotNavLabel,
             }}
           />
         ))}
