@@ -1,15 +1,33 @@
 import { CardProject } from '@/components/project';
+import { SectionHeading } from '@/components/common';
 
-import { PROJECTS } from '../../../../public/data';
+import { PROJECTS } from '@/data';
+import { getDictionary } from '@/i18n/get-dictionary';
+import type { Locale } from '@/i18n/config';
 
-export const ProjectSection = () => {
+interface Props {
+  lang: Locale;
+}
+
+export const ProjectSection = ({ lang }: Props) => {
+  const dict = getDictionary(lang);
+
   return (
-    <section className="mt-16">
-      <h2 className="text-3xl font-bold mb-4">Últimos proyectos</h2>
+    <section id="projects" className="mt-16 scroll-mt-28">
+      <SectionHeading eyebrow={dict.sections.eyebrow.projects} heading={dict.sections.projects} />
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         {PROJECTS.map((project) => (
-          <CardProject key={project.id} project={project} />
+          <CardProject
+            key={project.id}
+            project={project}
+            description={dict.projects.items[project.id].description}
+            labels={{
+              viewProject: dict.projects.viewProjectButton,
+              screenshotAlt: dict.projects.screenshotAlt,
+              screenshotNavLabel: dict.projects.screenshotNavLabel,
+            }}
+          />
         ))}
       </div>
     </section>

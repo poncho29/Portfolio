@@ -1,9 +1,9 @@
+import type { Locale } from "@/i18n/config";
+
 export interface IExperience {
   id: number;
-  title: string;
   company: string;
-  logoCompany?: () => JSX.Element;
-  date: string;
-  description: string[];
-  href: string;
+  logoKey?: string;
+  date: Record<Locale, string>;
+  href?: Record<Locale, string>;
 }

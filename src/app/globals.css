@@ -28,6 +28,8 @@ body {
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
+    --brand: 217 91% 60%;
+    --brand-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
@@ -55,6 +57,8 @@ body {
     --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
+    --brand: 213 94% 68%;
+    --brand-foreground: 240 10% 3.9%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
@@ -73,11 +77,119 @@ body {
     @apply border-border;
   }
 
-  html {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Defensive: the full-bleed hero aurora escapes its container via 100vw +
+   a negative margin, which can overshoot by the scrollbar's width on
+   desktop. Clipping horizontally on the root element (not `body`, which
+   would otherwise pick up a second nested scroll container per the
+   overflow-x/overflow-y pairing rule) guarantees no horizontal scrollbar
+   ever appears, at any breakpoint, without changing sticky/scroll behaviour. */
+html {
+  overflow-x: hidden;
+}
+
+/* Hero aurora / mesh gradient backdrop. Decorative, sits behind hero content.
+   Full-bleed: `left: 50%` resolves against `.hero-aurora`'s containing
+   block (the relatively-positioned hero <section>), which is itself
+   horizontally centered on the page via `mx-auto` — so shifting by
+   `-50vw` lands exactly on the viewport edges instead of the section's
+   edges, escaping the `max-w-7xl` content column. The element is also
+   given extra vertical bleed (`top`/`bottom` beyond 0) so the blur and
+   the mask both have room to fade out before reaching a hard edge. */
+@layer utilities {
+  .hero-aurora {
+    position: absolute;
+    left: 50%;
+    top: -10rem;
+    bottom: -10rem;
+    width: 100vw;
+    margin-left: -50vw;
+    z-index: -10;
+    pointer-events: none;
+    /* The blurred blobs below are intentionally larger than this box so
+       their soft edges never show, but that also means their un-blurred
+       geometry would otherwise widen the page's scrollable area sideways
+       (invisible, since it's transparent there, but still real overflow).
+       Clipping to this box — which is itself already full-bleed and has
+       10rem of vertical bleed room for the mask to fade into — keeps the
+       glow edge-to-edge without adding any scrollable width. */
+    overflow: hidden;
+    /* Belt-and-suspenders fade so there is never a visible seam, even if
+       the radial gradients themselves are tuned differently later. */
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 18%,
+      black 82%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 18%,
+      black 82%,
+      transparent 100%
+    );
+  }
+
+  .hero-aurora::before,
+  .hero-aurora::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+  }
+
+  .hero-aurora::before {
+    top: 4rem;
+    left: 50%;
+    width: 38rem;
+    height: 30rem;
+    transform: translateX(-50%);
+    background: radial-gradient(circle at center, hsl(var(--brand) / 0.22), transparent 65%);
+  }
+
+  .hero-aurora::after {
+    top: 8rem;
+    right: 10%;
+    width: 30rem;
+    height: 26rem;
+    background: radial-gradient(circle at center, hsl(var(--primary) / 0.14), transparent 65%);
+  }
+
+  /* Soft glow/ring frame behind the hero portrait for depth. */
+  .hero-photo-frame {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .hero-photo-frame::before {
+    content: "";
+    position: absolute;
+    inset: -1.25rem;
+    z-index: -1;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, hsl(var(--brand) / 0.35), hsl(var(--primary) / 0.15));
+    filter: blur(28px);
   }
 }

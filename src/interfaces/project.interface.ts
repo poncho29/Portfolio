@@ -1,11 +1,8 @@
 export interface Project {
   id: string;
   name: string;
-  description: string;
-  urlImage: string;
+  /** One or two screenshots. The first one is the cover. */
+  images: string[];
   stack: string[];
-  isPrivate: boolean;
-  urlDemo: string;
-  urlCode: string;
-  urlDemoVideo?: string;
+  url: string;
 }

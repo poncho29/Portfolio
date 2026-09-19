@@ -1,18 +1,24 @@
-import Link from 'next/link';
-
-import { Linkedin, Github } from 'lucide-react';
-
 import { NavLink } from './NavLink';
 
-import { MENU_LINKS } from '../../../public/data';
+import { SocialLinks } from '@/components/common';
+import { getMenuLinks } from '@/data';
+import { getDictionary } from '@/i18n/get-dictionary';
+import type { Locale } from '@/i18n/config';
 
-export const Footer = () => {
+interface Props {
+  lang: Locale;
+}
+
+export const Footer = ({ lang }: Props) => {
+  const dict = getDictionary(lang);
+  const menuLinks = getMenuLinks(dict);
+
   return (
     <footer className="border-t bg-background">
-      <div className="max-w-7xl mx-auto flex items-center justify-between p-4 ">
-        <nav>
-          <ul className="flex gap-x-4">
-            {MENU_LINKS.map((link) => (
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 p-4 sm:flex-row sm:justify-between">
+        <nav aria-label={dict.nav.mainNavigation}>
+          <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+            {menuLinks.map((link) => (
               <li key={link.id}>
                 <NavLink href={link.href} label={link.label} />
               </li>
@@ -20,22 +26,15 @@ export const Footer = () => {
           </ul>
         </nav>
 
-        <div className="flex gap-x-4">
-          <Link href="https://www.linkedin.com/in/sebastianmeneses29/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <Linkedin className="h-6 w-6" />
-          </Link>
-          <Link href="https://github.com/poncho29" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <Github className="h-6 w-6" />
-          </Link>
-        </div>
+        <SocialLinks linkedinLabel="LinkedIn" githubLabel="GitHub" />
       </div>
 
       <div className="text-center pb-3">
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Sebasti&aacute;n Meneses
-          <span className='hidden sm:inline'>&nbsp;-&nbsp;</span>
+          © {new Date().getFullYear()} Sebastián Meneses.
+          <span className="hidden sm:inline">&nbsp;</span>
           <br className="sm:hidden" />
-          Todos los derechos reservados.
+          {dict.footer.rights}
         </p>
       </div>
     </footer>
