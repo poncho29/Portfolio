@@ -2,6 +2,8 @@ export interface Dictionary {
   metadata: {
     title: string;
     description: string;
+    role: string;
+    ogImageAlt: string;
   };
   nav: {
     mainNavigation: string;
@@ -93,6 +95,8 @@ export const en: Dictionary = {
     title: "Sebastián Meneses | Full Stack Web Developer",
     description:
       "Full Stack Web Developer based in Brisbane, Australia. Almost 5 years building modern, scalable web applications with React, Next.js, Node.js and Nest.js.",
+    role: "Full Stack Web Developer",
+    ogImageAlt: "Sebastián Meneses, Full Stack Web Developer based in Brisbane, Australia",
   },
   nav: {
     mainNavigation: "Main navigation",
