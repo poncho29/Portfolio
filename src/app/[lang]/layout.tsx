@@ -7,7 +7,7 @@ import "../globals.css";
 import { Footer, Header } from "@/components/layout";
 import { ThemeProvider } from "@/components/common";
 
-import { locales, type Locale } from "@/i18n/config";
+import { isSupportedLocale, locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { SITE_URL } from "@/lib/site";
 import { SKILL_CATEGORIES } from "@/data";
@@ -22,11 +22,6 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
-
-interface LangLayoutProps {
-  children: React.ReactNode;
-  params: { lang: Locale };
-}
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -50,7 +45,15 @@ const keywords = SKILL_CATEGORIES.flatMap((category) =>
   category.skills.map((skill) => skill.name)
 );
 
-export function generateMetadata({ params }: { params: { lang: Locale } }): Metadata {
+export async function generateMetadata({
+  params: paramsPromise,
+}: Pick<LayoutProps<"/[lang]">, "params">): Promise<Metadata> {
+  const params = await paramsPromise;
+
+  if (!isSupportedLocale(params.lang)) {
+    notFound();
+  }
+
   const dict = getDictionary(params.lang);
   const otherLocale: Locale = params.lang === "en" ? "es" : "en";
 
@@ -111,14 +114,12 @@ export function generateMetadata({ params }: { params: { lang: Locale } }): Meta
   };
 }
 
-function isSupportedLocale(value: string): value is Locale {
-  return (locales as readonly string[]).includes(value);
-}
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params,
-}: Readonly<LangLayoutProps>) {
+  params: paramsPromise,
+}: Readonly<LayoutProps<"/[lang]">>) {
+  const params = await paramsPromise;
+
   // Requests for a literal top-level path with no matching static/convention
   // file (e.g. /favicon.ico, which no longer exists now that the icon is
   // served via icon.svg + apple-icon.png) fall through to this dynamic
