@@ -29,20 +29,25 @@ export const ContactFormSection = ({ lang }: Props) => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  // Bumped on every submit outcome so a repeat submit restarts the hide timer.
+  const [alertId, setAlertId] = useState(0);
 
   useEffect(() => {
-    if (submitSuccess || errors.submit) {
-      setShowAlert(true);
+    if (alertId === 0) return;
 
-      // 6s (not the previous 2s) gives assistive tech and human readers
-      // enough time to perceive the message before it disappears.
-      const timer = setTimeout(() => {
-        setShowAlert(false)
-      }, 6000)
+    // 6s (not the previous 2s) gives assistive tech and human readers
+    // enough time to perceive the message before it disappears.
+    const timer = setTimeout(() => {
+      setShowAlert(false)
+    }, 6000)
 
-      return () => clearTimeout(timer)
-    }
-  }, [submitSuccess, errors.submit])
+    return () => clearTimeout(timer)
+  }, [alertId])
+
+  const revealAlert = () => {
+    setShowAlert(true);
+    setAlertId((id) => id + 1);
+  }
 
   const validateField = (name: keyof IContactFormData, value: string): string => {
     switch (name) {
@@ -104,6 +109,8 @@ export const ContactFormSection = ({ lang }: Props) => {
         setSubmitSuccess(true);
         setFormData({ name: '', email: '', message: '' });
       }
+
+      revealAlert();
     }
 
     setIsSubmitting(false)

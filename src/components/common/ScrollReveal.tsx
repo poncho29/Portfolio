@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -15,23 +15,31 @@ interface Props {
  * variant, so content is never stuck invisible) and reveals immediately if
  * IntersectionObserver is unavailable.
  */
+const subscribeToNothing = () => () => {};
+
+// The server assumes support so markup matches the common case; browsers
+// without IntersectionObserver then switch to "visible" right after hydration.
+const useCanObserve = () =>
+  useSyncExternalStore(
+    subscribeToNothing,
+    () => typeof IntersectionObserver !== 'undefined',
+    () => true
+  );
+
 export const ScrollReveal = ({ children, className }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const canObserve = useCanObserve();
+  const [hasIntersected, setHasIntersected] = useState(false);
+  const isVisible = hasIntersected || !canObserve;
 
   useEffect(() => {
     const node = ref.current;
-    if (!node) return;
-
-    if (typeof IntersectionObserver === 'undefined') {
-      setIsVisible(true);
-      return;
-    }
+    if (!node || !canObserve) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setHasIntersected(true);
           observer.disconnect();
         }
       },
@@ -41,7 +49,7 @@ export const ScrollReveal = ({ children, className }: Props) => {
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, []);
+  }, [canObserve]);
 
   return (
     <div

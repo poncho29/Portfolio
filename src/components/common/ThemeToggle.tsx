@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
 
@@ -17,13 +17,20 @@ interface Props {
 const BASE_CLASSES =
   'inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-muted/40 transition-colors duration-200';
 
-export const ThemeToggle = ({ labels, className }: Props) => {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+const subscribeToNothing = () => () => {};
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+// false during SSR and hydration, true afterwards: the "has mounted" signal
+// without a setState inside an effect (and the extra render it causes).
+const useIsClient = () =>
+  useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false
+  );
+
+export const ThemeToggle =({ labels, className }: Props) => {
+  const { resolvedTheme, setTheme } = useTheme();
+  const mounted = useIsClient();
 
   // Before mount the resolved theme is unknown on the server, so render a
   // same-sized inert placeholder instead of null: returning null here would
