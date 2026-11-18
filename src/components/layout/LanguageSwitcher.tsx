@@ -26,7 +26,7 @@ const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 /**
  * Persists the visitor's chosen locale so a later visit to the bare domain
- * (no locale segment) is honoured by the middleware instead of always
+ * (no locale segment) is honoured by the proxy instead of always
  * falling back to the default/negotiated locale.
  */
 const persistLocaleCookie = (locale: Locale) => {

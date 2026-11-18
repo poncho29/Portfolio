@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import ScrollToTopButton from "@/components/common/ScrollTopButton";
 import { GITHUB_URL, LINKEDIN_URL, ScrollReveal } from "@/components/common";
 
@@ -12,15 +14,17 @@ import {
 } from "@/components/sections";
 
 import { getDictionary } from "@/i18n/get-dictionary";
-import type { Locale } from "@/i18n/config";
+import { isSupportedLocale } from "@/i18n/config";
 import { SITE_URL } from "@/lib/site";
 
-interface Props {
-  params: { lang: Locale };
-}
+export default async function Home({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
 
-export default function Home({ params }: Props) {
-  const { lang } = params;
+  // The layout already 404s unsupported locales; this narrows `lang` for TS.
+  if (!isSupportedLocale(lang)) {
+    notFound();
+  }
+
   const dict = getDictionary(lang);
 
   const personJsonLd = {
@@ -43,7 +47,6 @@ export default function Home({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
         }}

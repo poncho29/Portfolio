@@ -1,12 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { defaultLocale, locales, type Locale } from "@/i18n/config";
+import {
+  defaultLocale,
+  isSupportedLocale,
+  locales,
+  type Locale,
+} from "@/i18n/config";
 
 const LOCALE_COOKIE = "NEXT_LOCALE";
-
-function isSupportedLocale(value: string): value is Locale {
-  return (locales as readonly string[]).includes(value);
-}
 
 /**
  * Parses an `Accept-Language` header value, respecting `q` weights, and
@@ -56,7 +57,7 @@ function resolveLocale(request: NextRequest): Locale {
   return defaultLocale;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const pathnameHasLocale = locales.some(
@@ -75,7 +76,7 @@ export function middleware(request: NextRequest) {
   // 307 (temporary) on purpose: the destination is negotiated per request from
   // the cookie and Accept-Language, so it changes between visits. A permanent
   // redirect would be cached by the browser and would pin the first visitor's
-  // locale forever, bypassing this middleware entirely on later visits.
+  // locale forever, bypassing this proxy entirely on later visits.
   return NextResponse.redirect(url, 307);
 }
 

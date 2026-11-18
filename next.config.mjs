@@ -12,7 +12,7 @@ const nextConfig = {
     // The blog and standalone /contact route were live and crawlable on the
     // previous production site. They were removed (half-built, unlinked),
     // so send any lingering inbound links/bookmarks to "/", which the
-    // middleware then resolves to the visitor's locale.
+    // proxy then resolves to the visitor's locale.
     return [
       { source: "/blog", destination: "/", permanent: true },
       { source: "/blog/:slug*", destination: "/", permanent: true },
